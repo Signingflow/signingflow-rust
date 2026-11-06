@@ -1,0 +1,27 @@
+[package]
+name = "signingflow"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+license = "MIT"
+description = "Official Rust SDK for sending a document, reading envelope status, and verifying webhooks with the Signingflow API."
+repository = "https://github.com/Signingflow/signingflow-rust"
+readme = "README.md"
+keywords = ["signingflow", "sdk", "webhooks"]
+categories = ["api-bindings"]
+include = ["src/**/*", "resources/allowlist.json", "README.md", "CHANGELOG.md", "LICENSE"]
+
+[dependencies]
+getrandom = "0.2"
+hmac = "0.12"
+rustix = { version = "0.38", features = ["fs"] }
+rustls = "0.23"
+rustls-pemfile = "2"
+serde_json = "1"
+sha2 = "0.10"
+ureq = { version = "2.12", default-features = false, features = ["tls"] }
+url = "2"
+webpki-roots = "0.26"
+
+[dev-dependencies]
+rcgen = "0.13"

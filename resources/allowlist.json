@@ -1,0 +1,110 @@
+{
+  "catalog": "mcp",
+  "operations": [
+    {
+      "operationId": "StorageService_BatchAddStorage",
+      "http": "POST",
+      "path": "/v1/storages:batchAddStorage",
+      "idempotent": true,
+      "capability": "storage:write"
+    },
+    {
+      "operationId": "StorageService_BatchAcknowledgeUpload",
+      "http": "POST",
+      "path": "/v1/storages:batchAcknowledgeUpload",
+      "idempotent": true,
+      "capability": "storage:write"
+    },
+    {
+      "operationId": "EnvelopeService_AddEnvelope",
+      "http": "POST",
+      "path": "/v1/envelopes:addEnvelope",
+      "idempotent": true,
+      "capability": "envelope:write"
+    },
+    {
+      "operationId": "EnvelopeService_ViewEnvelope",
+      "http": "GET",
+      "path": "/v1/{name_1}:view",
+      "idempotent": false,
+      "capability": "envelope:read"
+    },
+    {
+      "operationId": "EnvelopeService_UpdateEnvelope",
+      "http": "PATCH",
+      "path": "/v1/{envelope.name}",
+      "idempotent": false,
+      "capability": "envelope:write"
+    },
+    {
+      "operationId": "EnvelopeService_SendEnvelope",
+      "http": "POST",
+      "path": "/v1/{name}:send",
+      "idempotent": true,
+      "capability": "envelope:send"
+    },
+    {
+      "operationId": "EnvelopeService_ListEnvelopes",
+      "http": "GET",
+      "path": "/v1/{parent}",
+      "idempotent": false,
+      "capability": "envelope:read"
+    },
+    {
+      "operationId": "EnvelopeService_RemindEnvelopeSigners",
+      "http": "POST",
+      "path": "/v1/{name}:remind",
+      "idempotent": false,
+      "capability": "envelope:send"
+    },
+    {
+      "operationId": "EnvelopeService_DownloadEnvelope",
+      "http": "GET",
+      "path": "/v1/{name}:download",
+      "idempotent": false,
+      "capability": "envelope:read"
+    },
+    {
+      "operationId": "TemplateService_UseTemplate",
+      "http": "POST",
+      "path": "/v1/{name}:use",
+      "idempotent": true,
+      "capability": "template:write"
+    },
+    {
+      "operationId": "WebhookUrlService_AddWebhookUrl",
+      "http": "POST",
+      "path": "/v1/webhookUrls:add",
+      "idempotent": true,
+      "capability": "webhook:write"
+    },
+    {
+      "operationId": "WebhookUrlService_ViewWebhookUrl",
+      "http": "GET",
+      "path": "/v1/{name}:view",
+      "idempotent": false,
+      "capability": "webhook:read"
+    },
+    {
+      "operationId": "WebhookUrlService_TestWebhookUrl",
+      "http": "POST",
+      "path": "/v1/{name}:test",
+      "idempotent": false,
+      "capability": "webhook:write"
+    },
+    {
+      "operationId": "WebhookService_ListWebhooks",
+      "http": "GET",
+      "path": "/v1/{parent}",
+      "idempotent": false,
+      "capability": "webhook:read"
+    },
+    {
+      "operationId": "WebhookService_ViewWebhook",
+      "http": "GET",
+      "path": "/v1/{name}:view",
+      "idempotent": false,
+      "capability": "webhook:read"
+    }
+  ]
+}

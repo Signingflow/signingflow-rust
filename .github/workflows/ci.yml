@@ -1,0 +1,34 @@
+name: SDK Rust
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        rust: ["1.85.0", "stable"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ matrix.rust }}
+          components: llvm-tools-preview
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-llvm-cov@0.6.21
+      - name: Test with coverage
+        run: |
+          cargo llvm-cov --json --summary-only --fail-under-lines 80 --fail-under-regions 80 --output-path coverage.json
+          python3 -c 'import json; print(json.load(open("coverage.json"))["data"][0]["totals"]["lines"]["percent"])' > .coverage-percent
+      - name: Publish coverage badge
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && matrix.rust == '1.85.0'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: bash .github/publish-coverage-badge.sh "$(cat .coverage-percent)"
