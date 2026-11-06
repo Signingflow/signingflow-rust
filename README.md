@@ -1,7 +1,7 @@
 # signingflow
 
 [![CI](https://github.com/Signingflow/signingflow-rust/actions/workflows/ci.yml/badge.svg)](https://github.com/Signingflow/signingflow-rust/actions/workflows/ci.yml)
-[![Coverage](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Signingflow/signingflow-rust/badges/coverage.json)](https://github.com/Signingflow/signingflow-rust/actions/workflows/ci.yml)
+[![Coverage](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FSigningflow%2Fsigningflow-rust%2Fbadges%2Fcoverage.json)](https://github.com/Signingflow/signingflow-rust/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
 Rust SDK for the Signingflow calls used to send a document, read envelope status, and receive webhooks.
