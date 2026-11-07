@@ -29,12 +29,12 @@ jobs:
       - name: Test with coverage
         run: |
           cargo llvm-cov --json --summary-only --fail-under-lines 80 --fail-under-regions 80 --output-path coverage.json
-          python3 -c 'import json; print(json.load(open("coverage.json"))["data"][0]["totals"]["lines"]["percent"])' > .coverage-percent
+          python3 -c 'import json; print(json.load(open("coverage.json"))["data"][0]["totals"]["lines"]["percent"])' > coverage-percent.txt
       - uses: actions/upload-artifact@v4
         if: github.event_name == 'push' && github.ref == 'refs/heads/main' && matrix.rust == '1.85.0'
         with:
           name: coverage-percent
-          path: .coverage-percent
+          path: coverage-percent.txt
           retention-days: 1
 
   badge:
@@ -51,4 +51,4 @@ jobs:
           name: coverage-percent
       - env:
           GITHUB_TOKEN: ${{ github.token }}
-        run: bash .github/publish-coverage-badge.sh "$(cat .coverage-percent)"
+        run: bash .github/publish-coverage-badge.sh "$(cat coverage-percent.txt)"
