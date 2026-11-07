@@ -6,29 +6,49 @@ on:
   pull_request:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: write
     strategy:
       matrix:
         rust: ["1.85.0", "stable"]
     steps:
       - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@master
+      - uses: dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8 # master
         with:
           toolchain: ${{ matrix.rust }}
           components: llvm-tools-preview
-      - uses: taiki-e/install-action@v2
+      - uses: taiki-e/install-action@3a3daafd3b7f23b8f65d9f5ba2db203fb59b79e2 # v2
         with:
           tool: cargo-llvm-cov@0.6.21
       - name: Test with coverage
         run: |
           cargo llvm-cov --json --summary-only --fail-under-lines 80 --fail-under-regions 80 --output-path coverage.json
           python3 -c 'import json; print(json.load(open("coverage.json"))["data"][0]["totals"]["lines"]["percent"])' > .coverage-percent
-      - name: Publish coverage badge
+      - uses: actions/upload-artifact@v4
         if: github.event_name == 'push' && github.ref == 'refs/heads/main' && matrix.rust == '1.85.0'
-        env:
+        with:
+          name: coverage-percent
+          path: .coverage-percent
+          retention-days: 1
+
+  badge:
+    needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: coverage-percent
+      - env:
           GITHUB_TOKEN: ${{ github.token }}
         run: bash .github/publish-coverage-badge.sh "$(cat .coverage-percent)"
